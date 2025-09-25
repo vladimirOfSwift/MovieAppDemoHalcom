@@ -14,7 +14,7 @@ final class MovieAPIService {
     
     func fetchPopularMovies() async throws -> MovieResponse {
         
-        guard let url = URL(string: "\(baseURL)/movie/popular") else {
+        guard let url = URL(string: "\(baseURL)/trending/movie/day") else {
             throw URLError(.badURL)
         }
         

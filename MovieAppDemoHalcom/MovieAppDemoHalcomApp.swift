@@ -11,7 +11,7 @@ import SwiftUI
 struct MovieAppDemoHalcomApp: App {
     var body: some Scene {
         WindowGroup {
-            MovieListView()
+            RootView()
         }
     }
 }
