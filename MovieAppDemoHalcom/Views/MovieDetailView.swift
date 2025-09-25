@@ -15,8 +15,11 @@ struct MovieDetailView: View {
             VStack(alignment: .leading, spacing: 16) {
                 if let posterPath = movie.posterPath, let url = URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)") {
                     AsyncImage(url: url)
-                        .frame(width: 80, height: 120)
-                        .cornerRadius(5)
+                        .frame(width: 200, height: 300)
+                        .cornerRadius(10)
+                        .shadow(radius: 5)
+                        .padding(.bottom, 16)
+                        .frame(maxWidth: .infinity, alignment: .center)
                 }
                 
                 Text(movie.title)
