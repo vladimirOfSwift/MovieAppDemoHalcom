@@ -35,9 +35,9 @@
 			path = MovieAppDemoHalcom;
 			sourceTree = "<group>";
 		};
-		85444FFB2E845F1A00BFA47A /* MovieAppDemoHalcomTests */ = {
+		85444FFB2E845F1A00BFA47A /* MovieAppDemoHalcomUnitTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = MovieAppDemoHalcomTests;
+			path = MovieAppDemoHalcomUnitTests;
 			sourceTree = "<group>";
 		};
 		854450052E845F1A00BFA47A /* MovieAppDemoHalcomUITests */ = {
@@ -76,7 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				85444FEA2E845F1800BFA47A /* MovieAppDemoHalcom */,
-				85444FFB2E845F1A00BFA47A /* MovieAppDemoHalcomTests */,
+				85444FFB2E845F1A00BFA47A /* MovieAppDemoHalcomUnitTests */,
 				854450052E845F1A00BFA47A /* MovieAppDemoHalcomUITests */,
 				85444FE92E845F1800BFA47A /* Products */,
 			);
@@ -131,7 +131,7 @@
 				85444FFA2E845F1A00BFA47A /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				85444FFB2E845F1A00BFA47A /* MovieAppDemoHalcomTests */,
+				85444FFB2E845F1A00BFA47A /* MovieAppDemoHalcomUnitTests */,
 			);
 			name = MovieAppDemoHalcomTests;
 			packageProductDependencies = (

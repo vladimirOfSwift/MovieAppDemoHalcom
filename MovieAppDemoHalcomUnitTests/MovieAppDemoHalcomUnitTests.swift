@@ -1,6 +1,6 @@
 //
-//  MovieDecodingTests.swift
-//  MovieAppDemoHalcomTests
+//  MovieAppDemoHalcomUnitTests.swift
+//  MovieAppDemoHalcomUnitTests
 //
 //  Created by Vladimir Savic on 25. 9. 2025..
 //
@@ -8,7 +8,7 @@
 import XCTest
 @testable import MovieAppDemoHalcom
 
-final class MovieDecodingTests: XCTestCase {
+@MainActor final class MovieAppDemoHalcomUnitTests: XCTestCase {
     
     func testMovieResponseDecoding_fromLocalJSON() throws {
         
@@ -49,5 +49,19 @@ final class MovieDecodingTests: XCTestCase {
         } catch {
             print("Error fetching movies: \(error)")
         }
+    }
+    
+    func testFavoritesPersistence() {
+        let viewModel = MovieListViewModel()
+        
+        viewModel.favoriteMovieIDs = []
+        
+        viewModel.favoriteMovieIDs.insert(123)
+        
+        let newViewModel = MovieListViewModel()
+        
+        XCTAssertTrue(newViewModel.favoriteMovieIDs.contains(123), "Favorite movie IDs not persisted")
+        
+        UserDefaults.standard.removeObject(forKey: "favoriteMovieIDs")
     }
 }
