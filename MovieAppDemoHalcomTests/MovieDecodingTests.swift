@@ -24,7 +24,7 @@ final class MovieDecodingTests: XCTestCase {
         let decoder = JSONDecoder()
         let response = try decoder.decode(MovieResponse.self, from: data)
         
-        XCTAssertEqual(response.page, 1)
+        XCTAssertEqual(response.page ?? 0, 1)
         XCTAssertEqual(response.results.count, 2)
         XCTAssertEqual(response.totalPages, 100)
         XCTAssertEqual(response.totalResults, 2000)
@@ -35,5 +35,19 @@ final class MovieDecodingTests: XCTestCase {
         XCTAssertEqual(first.posterPath, "/a26cQPRhJPX6GbWfQbvZdrrp9j9.jpg")
         XCTAssertEqual(first.releaseDate, "1999-10-12")
         XCTAssertEqual(first.voteAverage, 8.4)
+    }
+    
+    func testFetchPopularMovies() async {
+        let service = MovieAPI()
+        
+        do {
+            let response = try await service.fetchPopularMovies()
+            print("Fetched \(response.results.count) movies")
+            if let first = response.results.first {
+                print("First movie: \(first.title)")
+            }
+        } catch {
+            print("Error fetching movies: \(error)")
+        }
     }
 }
