@@ -20,6 +20,9 @@ struct MovieListView: View {
                             .padding(.vertical, 8)
                     }
                 }
+                .refreshable {
+                    await viewModel.fetchPopularMovies()
+                }
                 .listStyle(PlainListStyle())
                 .disabled(viewModel.isLoading)
                 
