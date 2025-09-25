@@ -71,6 +71,18 @@ struct MovieListView: View {
             .task {
                 await viewModel.fetchPopularMovies()
             }
+            .alert("Error", isPresented: .constant(viewModel.errorMessage != nil), actions : {
+                Button("Retry") {
+                    Task {
+                        await viewModel.fetchPopularMovies()
+                    }
+                }
+                Button("Cancel", role: .cancel) {
+                    viewModel.errorMessage = nil
+                }
+            }, message: {
+                Text(viewModel.errorMessage ?? "Unknown error")
+            })
         }
     }
 }

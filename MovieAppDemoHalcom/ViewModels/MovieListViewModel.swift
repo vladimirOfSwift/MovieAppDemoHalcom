@@ -12,7 +12,7 @@ import Combine
 final class MovieListViewModel: ObservableObject {
     @Published var movies: [Movie] = []
     @Published var isLoading = false
-    @Published var errorMessage: String?
+    @Published var errorMessage: String? = nil
     
     private let service = MovieAPIService()
     
@@ -20,11 +20,19 @@ final class MovieListViewModel: ObservableObject {
         isLoading = true
         errorMessage = nil
         
+        if ProcessInfo.processInfo.arguments.contains("-UITestErrorCase") {
+            self.errorMessage = "Fake error for UI testing"
+            isLoading = false
+            return
+        }
+        
         do {
             let response = try await service.fetchPopularMovies()
             movies = response.results
         } catch {
-            errorMessage = error.localizedDescription
+            DispatchQueue.main.async {
+                self.errorMessage = error.localizedDescription
+            }
         }
         
         isLoading = false
