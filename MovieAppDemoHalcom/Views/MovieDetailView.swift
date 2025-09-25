@@ -36,6 +36,20 @@ struct MovieDetailView: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
+                if let adult = movie.adult {
+                    Text("Adult: \(adult ? "Yes" : "No")")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
+                }
+                
+                Text("Original language: \(movie.originalLanguage)")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                
+                Text("Vote count: \(movie.voteCount)")
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+                
                 Text(movie.overview ?? "No overview")
                     .font(.body)
             }
