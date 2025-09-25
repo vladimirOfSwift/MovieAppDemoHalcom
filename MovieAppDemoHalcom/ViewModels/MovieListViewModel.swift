@@ -13,6 +13,7 @@ final class MovieListViewModel: ObservableObject {
     @Published var movies: [Movie] = []
     @Published var isLoading = false
     @Published var errorMessage: String? = nil
+    @Published var favoriteMovieIDs: Set<Int> = []
     
     private let service = MovieAPIService()
     
@@ -36,5 +37,17 @@ final class MovieListViewModel: ObservableObject {
         }
         
         isLoading = false
+    }
+    
+    func isFavorite(_ movie: Movie) -> Bool {
+        favoriteMovieIDs.contains(movie.id)
+    }
+    
+    func toggleFavorite(_ movie: Movie) {
+        if favoriteMovieIDs.contains(movie.id) {
+            favoriteMovieIDs.remove(movie.id)
+        } else {
+            favoriteMovieIDs.insert(movie.id)
+        }
     }
 }
