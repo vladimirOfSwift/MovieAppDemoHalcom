@@ -14,7 +14,7 @@ struct MovieListView: View {
         NavigationView {
             ZStack {
                 List(viewModel.movies) { movie in
-                    NavigationLink(destination: MovieDetailView(movie: movie)) {
+                    NavigationLink(destination: MovieDetailView(movie: movie, viewModel: viewModel)) {
                         HStack(alignment: .top, spacing: 10) {
                             if let posterPath = movie.posterPath, let url = URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)") {
                                 AsyncImage(url: url)

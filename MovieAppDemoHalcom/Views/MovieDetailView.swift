@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MovieDetailView: View {
     let movie: Movie
+    @ObservedObject var viewModel: MovieListViewModel
     
     var body: some View {
         ScrollView {
@@ -22,9 +23,21 @@ struct MovieDetailView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                 }
                 
-                Text(movie.title)
-                    .font(.title)
-                    .bold()
+                HStack {
+                    Text(movie.title)
+                        .font(.title)
+                        .bold()
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        viewModel.toggleFavorite(movie)
+                    }) {
+                        Image(systemName: viewModel.isFavorite(movie) ? "heart.fill" : "heart")
+                            .foregroundColor(.red)
+                            .font(.title2)
+                    }
+                }
                 
                 if let releaseDate = movie.releaseDate {
                     Text("Release date: \(releaseDate)")
