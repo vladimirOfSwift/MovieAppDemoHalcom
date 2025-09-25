@@ -1,0 +1,13 @@
+# Xcode
+build/
+DerivedData/
+*.xcworkspace
+*.xcuserdata
+*.xccheckout
+*.moved-aside
+*.xcuserstate
+
+# Misc
+*.swp
+*.lock
+*.DS_Store
