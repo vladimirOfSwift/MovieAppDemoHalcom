@@ -38,7 +38,7 @@ final class MovieDecodingTests: XCTestCase {
     }
     
     func testFetchPopularMovies() async {
-        let service = MovieAPI()
+        let service = MovieAPIService()
         
         do {
             let response = try await service.fetchPopularMovies()
