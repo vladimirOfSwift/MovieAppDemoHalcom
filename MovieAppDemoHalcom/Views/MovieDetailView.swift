@@ -13,7 +13,7 @@ struct MovieDetailView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
+            VStack(alignment: .leading, spacing: 10) {
                 if let posterPath = movie.posterPath, let url = URL(string: "https://image.tmdb.org/t/p/w500/\(posterPath)") {
                     AsyncImage(url: url)
                         .frame(width: 200, height: 300)

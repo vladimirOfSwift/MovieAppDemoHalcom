@@ -12,48 +12,38 @@ struct MovieListView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                List(viewModel.movies) { movie in
+            List {
+                
+                ForEach(viewModel.movies) { movie in
                     NavigationLink(destination: MovieDetailView(movie: movie, viewModel: viewModel)) {
-                        
                         MovieRowView(movie: movie)
                             .padding(.vertical, 8)
                     }
-                }
-                .refreshable {
-                    await viewModel.fetchPopularMovies()
-                }
-                .listStyle(PlainListStyle())
-                .disabled(viewModel.isLoading)
-                
-                if viewModel.isLoading {
-                    Color.black.opacity(0.25)
-                        .ignoresSafeArea()
-                    
-                    VStack(spacing: 8) {
-                        ProgressView()
-                            .progressViewStyle(CircularProgressViewStyle())
-                        Text("Loading popular movies...")
-                            .font(.subheadline)
+                    .onAppear {
+                        if movie.id == viewModel.movies.last?.id {
+                            Task { await viewModel.fetchPopularMovies() }
+                        }
                     }
-                    .padding(16)
-                    .background(Color(.systemBackground))
-                    .cornerRadius(12)
-                    .shadow(radius: 10)
-                    .padding(40)
                 }
                 
-                
+            if viewModel.isLoadingPage {
+                    HStack {
+                        Spacer()
+                        ProgressView("Loading more movies...")
+                            .padding()
+                        Spacer()
+                    }
+                }
             }
+            .listStyle(PlainListStyle())
+            .refreshable {
+                await viewModel.fetchPopularMovies(reset: true)
+            }
+            .disabled(viewModel.isLoading)
             .navigationTitle("Popular Movies")
-            .task {
-                await viewModel.fetchPopularMovies()
-            }
-            .alert("Error", isPresented: .constant(viewModel.errorMessage != nil), actions : {
+            .alert("Error", isPresented: .constant(viewModel.errorMessage != nil), actions: {
                 Button("Retry") {
-                    Task {
-                        await viewModel.fetchPopularMovies()
-                    }
+                    Task { await viewModel.fetchPopularMovies(reset: true) }
                 }
                 Button("Cancel", role: .cancel) {
                     viewModel.errorMessage = nil
@@ -62,10 +52,11 @@ struct MovieListView: View {
                 Text(viewModel.errorMessage ?? "Unknown error")
             })
         }
+        .task {
+            await viewModel.fetchPopularMovies(reset: true)
+        }
     }
 }
-
-
 
 #Preview {
     MovieListView(viewModel: MovieListViewModel())

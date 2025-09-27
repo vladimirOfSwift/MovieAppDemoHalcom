@@ -22,6 +22,13 @@ final class MovieListViewModel: ObservableObject {
     private let service = MovieAPIService()
     private let favoritesKey = "favoriteMovieIDs"
     
+    //MARK: - Pagination state
+    
+    @Published var isPaginating = false
+    @Published var currentPage = 1
+    @Published var totalPages = 1
+    @Published var isLoadingPage = false
+    
     init() {
         loadFavorites()
     }
@@ -39,8 +46,15 @@ final class MovieListViewModel: ObservableObject {
         }
     }
     
-    func fetchPopularMovies() async {
-        isLoading = true
+    //MARK: - Networking
+    
+    func fetchPopularMovies(reset: Bool = false) async {
+        
+        guard !isLoadingPage else { return }
+        guard currentPage <= totalPages else { return }
+        
+        isLoading = reset
+        isLoadingPage = true
         errorMessage = nil
         
         if ProcessInfo.processInfo.arguments.contains("-UITestErrorCase") {
@@ -49,9 +63,17 @@ final class MovieListViewModel: ObservableObject {
             return
         }
         
+        if reset {
+            currentPage = 1
+            movies.removeAll()
+        }
+        
         do {
-            let response = try await service.fetchPopularMovies()
-            movies = response.results
+            let response = try await service.fetchPopularMovies(page: currentPage)
+            movies.append(contentsOf: response.results)
+            totalPages = response.totalPages ?? 1
+            currentPage += 1
+            
         } catch {
             DispatchQueue.main.async {
                 self.errorMessage = error.localizedDescription
@@ -59,7 +81,18 @@ final class MovieListViewModel: ObservableObject {
         }
         
         isLoading = false
+        isLoadingPage = false
     }
+    
+    func loadMoreIfNeeded(currentMovie movie: Movie) async {
+        guard let lastMovie = movies.last else { return }
+        
+        if movie.id == lastMovie.id {
+            await fetchPopularMovies()
+        }
+    }
+    
+    //MARK: - Favorites
     
     func isFavorite(_ movie: Movie) -> Bool {
         favoriteMovieIDs.contains(movie.id)
