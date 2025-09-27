@@ -25,7 +25,7 @@ struct MovieRowView: View {
                 Text(movie.title)
                     .font(.headline)
                     .lineLimit(2)
-                if let releaseDate = movie.releaseDate {
+                if let releaseDate = movie.formattedReleaseDate {
                     Text("Release date: \(releaseDate)")
                         .font(.subheadline)
                         .foregroundColor(.secondary)

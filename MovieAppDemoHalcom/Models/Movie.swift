@@ -28,3 +28,17 @@ struct Movie: Codable, Identifiable {
         case originalLanguage = "original_language"
     }
 }
+
+extension Movie {
+    var formattedReleaseDate: String? {
+        guard let releaseDate, !releaseDate.isEmpty else { return "-"}
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "yyyy-MM-dd"
+        if let date = inputFormatter.date(from: releaseDate) {
+            let outputFormatter = DateFormatter()
+            outputFormatter.dateFormat = "dd.MM.yyyy"
+            return outputFormatter.string(from: date)
+        }
+        return releaseDate
+    }
+}

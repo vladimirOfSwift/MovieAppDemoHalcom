@@ -18,6 +18,14 @@ final class MovieListViewModel: ObservableObject {
             saveFavorites()
         }
     }
+    @Published var searchText: String = ""
+    var filteredMovies: [Movie] {
+        if searchText.isEmpty {
+            return movies
+        } else {
+            return movies.filter { $0.title.localizedCaseInsensitiveContains(searchText)}
+        }
+    }
     
     private let service = MovieAPIService()
     private let favoritesKey = "favoriteMovieIDs"

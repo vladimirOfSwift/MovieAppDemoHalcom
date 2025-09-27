@@ -14,13 +14,14 @@ struct MovieListView: View {
         NavigationView {
             List {
                 
-                ForEach(viewModel.movies) { movie in
+                ForEach(viewModel.filteredMovies) { movie in
                     NavigationLink(destination: MovieDetailView(movie: movie, viewModel: viewModel)) {
                         MovieRowView(movie: movie)
                             .padding(.vertical, 8)
+                            
                     }
                     .onAppear {
-                        if movie.id == viewModel.movies.last?.id {
+                        if movie.id == viewModel.filteredMovies.last?.id {
                             Task { await viewModel.fetchPopularMovies() }
                         }
                     }
@@ -35,12 +36,14 @@ struct MovieListView: View {
                     }
                 }
             }
+            .listRowBackground(Color(.systemBackground))
             .listStyle(PlainListStyle())
             .refreshable {
                 await viewModel.fetchPopularMovies(reset: true)
             }
             .disabled(viewModel.isLoading)
             .navigationTitle("Popular Movies")
+            .searchable(text: $viewModel.searchText, prompt: "Search by title")
             .alert("Error", isPresented: .constant(viewModel.errorMessage != nil), actions: {
                 Button("Retry") {
                     Task { await viewModel.fetchPopularMovies(reset: true) }
