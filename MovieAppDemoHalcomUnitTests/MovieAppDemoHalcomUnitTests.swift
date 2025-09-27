@@ -64,4 +64,32 @@ import XCTest
         
         UserDefaults.standard.removeObject(forKey: "favoriteMovieIDs")
     }
+    
+    func testToggleFavorite_addsAndRemovesMovieID() {
+        let viewModel = MovieListViewModel()
+        
+        viewModel.favoriteMovieIDs = []
+        
+        let testMovieID = 25
+        let testMovie = Movie(
+            id: testMovieID,
+            title: "Test Movie",
+            overview: nil,
+            posterPath:  nil,
+            releaseDate: nil,
+           voteAverage: 0.0,
+            voteCount: 0,
+            adult: nil,
+            originalLanguage: "en"
+        )
+        
+        viewModel.toggleFavorite(testMovie)
+        XCTAssertTrue(viewModel.favoriteMovieIDs.contains(testMovieID), "Test movie ID should be added after first toggle")
+        
+        viewModel.toggleFavorite(testMovie)
+        XCTAssertFalse(viewModel.favoriteMovieIDs.contains(testMovieID), "Test movie ID should be removed after second toggle")
+        
+        UserDefaults.standard.removeObject(forKey: "favoriteMovieIDs")
+        
+    }
 }

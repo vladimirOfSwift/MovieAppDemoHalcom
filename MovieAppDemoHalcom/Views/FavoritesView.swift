@@ -16,11 +16,12 @@ struct FavoritesView: View {
                 let favorites = viewModel.movies.filter { viewModel.isFavorite($0)}
                 
                 ForEach(favorites) { movie in
-                    NavigationLink(destination: MovieDetailView(movie: movie, viewModel: viewModel)) {
+                    NavigationLink(destination: MovieDetailView(movieTapped: movie, listViewModel: viewModel)) {
                         MovieRowView(movie: movie)
                     }
                 }
                 .onDelete { IndexSet in
+                    // Animate removal of favorites from the list
                     withAnimation {
                         for index in IndexSet {
                             let movie = favorites[index]
@@ -34,6 +35,4 @@ struct FavoritesView: View {
     }
 }
 
-//#Preview {
-//    FavoritesView()
-//}
+

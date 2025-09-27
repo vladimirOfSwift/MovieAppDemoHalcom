@@ -7,6 +7,7 @@
 
 import Foundation
 
+//MARK: - TMDB API Response Model
 struct MovieResponse: Codable {
     let page: Int?
     let results: [Movie]

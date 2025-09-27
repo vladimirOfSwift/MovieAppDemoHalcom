@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+/// Root container of the app.
+/// Provides a shared MovieListViewModel to both tabs so that movies and favorites stay in sync.
 struct RootView: View {
     @StateObject private var viewModel = MovieListViewModel()
     

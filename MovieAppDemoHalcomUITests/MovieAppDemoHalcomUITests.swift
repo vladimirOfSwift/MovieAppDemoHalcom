@@ -26,4 +26,12 @@ final class MovieAppDemoHalcomUITests: XCTestCase {
         XCTAssertTrue(alert.buttons["Retry"].exists)
         XCTAssert(alert.buttons["Cancel"].exists)
     }
+    
+    func testMovieListLoads() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let firstMovieCell = app.tables.cells.firstMatch
+        XCTAssertTrue(firstMovieCell.waitForExistence(timeout: 5), "Movie list table view should not be empty")
+    }
 }
