@@ -12,9 +12,21 @@ struct FavoritesView: View {
     
     var body: some View {
         NavigationView {
-            List(viewModel.movies.filter { viewModel.isFavorite($0) }) { movie in
-                NavigationLink(destination: MovieDetailView(movie: movie, viewModel: viewModel)) {
-                    MovieRowView(movie: movie)
+            List {
+                let favorites = viewModel.movies.filter { viewModel.isFavorite($0)}
+                
+                ForEach(favorites) { movie in
+                    NavigationLink(destination: MovieDetailView(movie: movie, viewModel: viewModel)) {
+                        MovieRowView(movie: movie)
+                    }
+                }
+                .onDelete { IndexSet in
+                    withAnimation {
+                        for index in IndexSet {
+                            let movie = favorites[index]
+                            viewModel.toggleFavorite(movie)
+                        }
+                    }
                 }
             }
             .navigationTitle("Favorite movies")
