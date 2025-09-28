@@ -32,16 +32,18 @@ MovieAppDemoHalcom is a small iOS app that fetches and displays a list of movies
 ---
 
 ## Architecture & Design Choices
-- **MVVM Architecture**: Separation of View, ViewModel, and Model for modularity and testability.
-- **Networking**: `MovieAPIService` handles API requests using async/await.
-- **Data Persistence**: `UserDefaults` used for storing favorite movies.
-- **Error Handling**: Alerts display API/network errors and provide retry options.
-- **Pagination**: Incremental loading reduces initial load time.
-- **Testing**: Includes three Unit tests and three UI tests
+- **MVVM Architecture:** Separation of View, ViewModel, and Model for modularity and testability.
+- **Networking:** `MovieAPIService` handles API requests using async/await.
+- **Data Persistence:** `UserDefaults` used for storing favorite movies.
+- **Error Handling:** Alerts display API/network errors and provide retry options.
+- **Pagination:** Incremental loading reduces initial load time.
+- **Testing:** Includes three Unit tests and three UI tests.
 
 **Trade-offs**:
 - `UserDefaults` chosen for simplicity over Core Data for favorites persistence.
 - SwiftUI chosen for faster development and easier testing; UIKit could allow more customization.
+
+---
 
 ## Requirements
 - iOS 16+
@@ -52,41 +54,43 @@ MovieAppDemoHalcom is a small iOS app that fetches and displays a list of movies
 
 ## How to Run
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/MovieAppDemoHalcom.git
-cd MovieAppDemoHalcom
+1. Clone the repository: git clone https://github.com/vladimirOfSwift/MovieAppDemoHalcom
 
-2. Open MovieAppDemoHalcom.xcodeproj
+2. Open `MovieAppDemoHalcom.xcodeproj`
 
 3. Build & Run on a simulator or device.
 
+---
+
 ## Testing
 
-Unit Tests
+**Unit Tests**
 
-Fetching popular movies.
-Favorites persistence in UserDefaults.
-Toggling favorites.
+- Fetching popular movies.
+- Favorites persistence in `UserDefaults`.
+- Toggling favorites.
 
-UI Tests
+**UI Tests**
 
-Error alert appears correctly.
-Tab navigation works.
-Search functionality works as expected.
+- Error alert appears correctly.
+- Tab navigation works.
+- Search functionality works as expected.
+
+---
 
 ## Notes
 
 This project covers the key tasks from the test assignment:
+- Fetching movies from a public API
+- Search functionality
+- Movie detail screen
+- Favorites management with persistent storage and deletion of favourites by swiping.
+- Pull-to-refresh, pagination, loading/error handling
+- Unit and UI tests included
 
-Fetching movies from a public API
-Search functionality
-Movie detail screen
-Favorites management with persistent storage and deletion of favourites by swiping.
-Pull-to-refresh, pagination, loading/error handling
-Unit and UI tests included
+---
 
-Contact
+## Contact
 
 Created by Vladimir Savic – for iOS developer test purposes.
 
