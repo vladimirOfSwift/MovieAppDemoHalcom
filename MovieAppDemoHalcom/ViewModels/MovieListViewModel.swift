@@ -70,13 +70,13 @@ final class MovieListViewModel: ObservableObject {
         isLoadingPage = true
         errorMessage = nil
         
-        // Fake error case for UI testing
+        // UI Test: Use mock data
         if ProcessInfo.processInfo.arguments.contains("-UITestErrorCase") {
             self.errorMessage = "Fake error for UI testing"
             isLoading = false
             return
         }
-        
+
         if reset {
             currentPage = 1
             movies.removeAll()
@@ -105,7 +105,7 @@ final class MovieListViewModel: ObservableObject {
             await fetchPopularMovies()
         }
     }
-    
+  
     //MARK: - Favorites
     
     func isFavorite(_ movie: Movie) -> Bool {

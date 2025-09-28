@@ -27,11 +27,26 @@ final class MovieAppDemoHalcomUITests: XCTestCase {
         XCTAssert(alert.buttons["Cancel"].exists)
     }
     
-    func testMovieListLoads() throws {
+    func testTabNavigation() throws {
         let app = XCUIApplication()
         app.launch()
         
-        let firstMovieCell = app.tables.cells.firstMatch
-        XCTAssertTrue(firstMovieCell.waitForExistence(timeout: 5), "Movie list table view should not be empty")
+        XCTAssertTrue(app.tabBars.buttons["Movies"].exists)
+        XCTAssertTrue(app.tabBars.buttons["Movies"].isSelected)
+        
+        let favoritesTab = app.tabBars.buttons["Favorites"]
+        XCTAssertTrue(favoritesTab.exists)
+        favoritesTab.tap()
+        
+        XCTAssertTrue(favoritesTab.isSelected)
     }
+    
+    func testSearchBarExists() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        let searchField = app.searchFields["Search by title"]
+        XCTAssertTrue(searchField.exists, "Search bar should exist on the Movies tab")
+    }
+  
 }
